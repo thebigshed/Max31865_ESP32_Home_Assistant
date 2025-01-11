@@ -1,0 +1,57 @@
+esphome:
+name: wroom
+friendly_name: wroom
+
+esp32:
+board: esp32-s3-devkitc-1
+framework:
+type: arduino
+
+# Enable logging
+logger:
+
+# Enable Home Assistant API
+api:
+encryption:
+key: "*******"
+
+ota:
+- platform: esphome
+password: "*****"
+
+wifi:
+ssid: "*************”
+password: "*******************"
+
+# Enable fallback hotspot (captive portal) in case wifi connection fails
+ap:
+ssid: "Wroom Fallback Hotspot"
+password: "******************”
+
+captive_portal:
+light:
+- platform: esp32_rmt_led_strip
+id: my_light 
+rgb_order: GRB
+pin: GPIO48
+num_leds: 1
+rmt_channel: 0
+chipset: ws2812
+name: "My Light"
+effects:
+- pulse:
+transition_length: 550ms
+update_interval: 550ms
+
+spi:
+miso_pin: GPIO41
+mosi_pin: GPIO42
+clk_pin: GPIO40
+
+sensor:
+- platform: max31865
+name: "Office Room Temperature"
+update_interval: 10s
+cs_pin: GPIO2
+reference_resistance: 4300 Ω
+rtd_nominal_resistance: 1000 Ω
